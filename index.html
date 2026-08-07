@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Alpine Meadow</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="loading">Growing the meadow…</div>
+  <canvas id="scene"></canvas>
+  <div id="vignette"></div>
+  <div id="hint">Drag to look around &nbsp;·&nbsp; Joystick to walk</div>
+  <div id="joystickZone"><div id="joystickBase"><div id="joystickNub"></div></div></div>
+  <button id="settingsToggle">⚙</button>
+  <div id="settingsPanel">
+    <div class="settingsRow">
+      <label>Time of day</label>
+      <input type="range" id="timeSlider" min="0" max="1000" value="740">
+    </div>
+    <div class="settingsRow">
+      <label>Weather</label>
+      <div class="btnGroup" id="weatherButtons">
+        <button data-w="clear" class="wBtn active">Clear</button>
+        <button data-w="rain" class="wBtn">Rain</button>
+        <button data-w="snow" class="wBtn">Snow</button>
+      </div>
+    </div>
+    <div class="settingsRow">
+      <label>Quality <span class="hintSmall">(reloads scene)</span></label>
+      <div class="btnGroup" id="qualityButtons">
+        <button data-q="low" class="qBtn">Low</button>
+        <button data-q="medium" class="qBtn">Med</button>
+        <button data-q="high" class="qBtn">High</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
+
