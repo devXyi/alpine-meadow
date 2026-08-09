@@ -2,9 +2,9 @@
 // Nothing in this file changes at runtime.
 
 export const QUALITY = {
-  low:    { grass: 3200,  flowersPer: 30, trees: 14, fireflies: 24, weather: 200, stars: 260, shadowRes: 512,  birds: 4, fish: 3, rabbits: 3 },
-  medium: { grass: 6500,  flowersPer: 55, trees: 20, fireflies: 44, weather: 380, stars: 460, shadowRes: 1024, birds: 6, fish: 4, rabbits: 4 },
-  high:   { grass: 13000, flowersPer: 85, trees: 28, fireflies: 70, weather: 600, stars: 700, shadowRes: 2048, birds: 8, fish: 5, rabbits: 6 }
+  low:    { grass: 7000,  flowersPer: 42,  trees: 18, fireflies: 30, weather: 220, stars: 300, shadowRes: 512,  birds: 5,  fish: 4, rabbits: 4 },
+  medium: { grass: 18000, flowersPer: 75,  trees: 24, fireflies: 52, weather: 420, stars: 520, shadowRes: 1024, birds: 7, fish: 5, rabbits: 5 },
+  high:   { grass: 36000, flowersPer: 115, trees: 34, fireflies: 82, weather: 680, stars: 850, shadowRes: 2048, birds: 10, fish: 7, rabbits: 8 }
 };
 
 export const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.innerWidth < 820;
@@ -17,19 +17,23 @@ function getQualityLevel() {
 export const qualityLevel = getQualityLevel();
 export const quality = QUALITY[qualityLevel];
 
-// World size. fieldExtent is the walkable/content radius; groundMeshSize is
-// deliberately larger so the ground plane's edge stays hidden in fog.
 export const fieldExtent = 100;
 export const groundMeshSize = 460;
-export const groundSegments = 130;
+export const groundSegments = 170;
 
 export const spawn = { x: 0, z: 16 };
 export const lake = { x: 14, z: -10, radius: 8.5, y: -0.9 };
-export const houseConfigs = [
-  { x: -15, z: 8,   wall: 0xead9b3, roof: 0x8a3f2e },
-  { x: -22, z: -8,  wall: 0xcf9569, roof: 0x5c4433 },
-  { x: -7,  z: -22, wall: 0xc9d3d1, roof: 0x6b4a3a }
-];
-export const HOUSE_HALF = 2.4;
-export const pathPoints = [[0, 16], [-3, 7], [-9, 1], [-14.5, -2.5], [-19, -6.5]];
 
+// Story-rich village layout. Each home is intentionally different so the
+// skyline feels like a small alpine settlement rather than repeated boxes.
+export const houseConfigs = [
+  { x: -15, z: 8,   wall: 0xead9b3, roof: 0x8a3f2e, stories: 3, scale: 1.00 },
+  { x: -24, z: -8,  wall: 0xcf9569, roof: 0x5c4433, stories: 4, scale: 1.05 },
+  { x: -7,  z: -24, wall: 0xc9d3d1, roof: 0x6b4a3a, stories: 5, scale: 0.95 },
+  { x: 20,  z: 12,  wall: 0xd8c4a2, roof: 0x704437, stories: 4, scale: 1.10 },
+  { x: 31,  z: -4,  wall: 0xb9c7bd, roof: 0x4e5a52, stories: 3, scale: 1.00 },
+  { x: 25,  z: -24, wall: 0xe0b88d, roof: 0x704235, stories: 5, scale: 0.92 }
+];
+
+export const HOUSE_HALF = 4.0;
+export const pathPoints = [[0, 16], [-3, 7], [-9, 1], [-14.5, -2.5], [-19, -6.5], [-13, -18], [-3, -24]];
