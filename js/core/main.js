@@ -1,12 +1,12 @@
 import { isMobile, spawn } from './config.js';
 import { state } from './state.js';
-import { terrainHeight, buildGround, buildLake } from './terrain.js';
-import { buildSky, buildLights, buildClouds, buildWeather, applyDayNight, updateWeather, updateClouds } from './environment.js';
-import { buildGrass, buildFlowers, buildTrees, buildMountains } from './scenery.js';
-import { buildHouses, updateHouses } from './village.js';
-import { buildFlyers, updateFlyers, buildFishSchool, updateFish, buildRabbits, updateRabbits, buildFireflies, updateFireflies } from './wildlife.js';
-import { buildCharacter } from './character.js';
-import { initControls, updatePlayer, updateCamera } from './controls.js';
+import { terrainHeight, buildGround, buildLake } from '../world/terrain.js';
+import { buildSky, buildLights, buildClouds, buildWeather, applyDayNight, updateWeather, updateClouds } from '../world/environment.js';
+import { buildGrass, buildFlowers, buildTrees, buildMountains } from '../world/scenery.js';
+import { buildHouses, updateHouses } from '../world/village.js';
+import { buildFlyers, updateFlyers, buildFishSchool, updateFish, buildRabbits, updateRabbits, buildFireflies, updateFireflies } from '../entities/wildlife.js';
+import { buildCharacter } from '../entities/character.js';
+import { initControls, updatePlayer, updateCamera } from '../input/controls.js';
 
 if (!window.THREE) {
   document.getElementById('loading').textContent = 'Could not load the 3D library. Please check your connection and reload.';
@@ -42,7 +42,6 @@ function init() {
   state.scene = scene;
   state.camera = camera;
 
-  // Build order: atmosphere, then terrain, then everything that sits on it.
   buildSky();
   buildLights();
   buildClouds();
@@ -109,4 +108,3 @@ function init() {
   setTimeout(function () { loadingEl.style.display = 'none'; }, 650);
   animate();
 }
-
