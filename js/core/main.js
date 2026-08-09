@@ -87,7 +87,10 @@ function init() {
       state.grassShaderRef.uniforms.uTime.value = elapsed;
       if (state.grassShaderRef.uniforms.uWindStrength) state.grassShaderRef.uniforms.uWindStrength.value = state.windStrength;
     }
-    if (state.waterShaderRef) state.waterShaderRef.uniforms.uTime.value = elapsed;
+    if (state.waterShaderRef) {
+      state.waterShaderRef.uniforms.uTime.value = elapsed;
+      if (state.waterShaderRef.uniforms.uNightFactor) state.waterShaderRef.uniforms.uNightFactor.value = state.nightFactor;
+    }
     for (let i = 0; i < state.flowerShaderRefs.length; i++) {
       state.flowerShaderRefs[i].uniforms.uTime.value = elapsed;
       if (state.flowerShaderRefs[i].uniforms.uWindStrength) state.flowerShaderRefs[i].uniforms.uWindStrength.value = state.windStrength;
