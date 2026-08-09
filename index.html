@@ -10,10 +10,16 @@
   <div id="loading">Growing the meadow…</div>
   <canvas id="scene"></canvas>
   <div id="vignette"></div>
-  <div id="hint">Drag to look around &nbsp;·&nbsp; Joystick to walk</div>
+  <div id="hint">Drag to look around · Joystick to walk · Tap Run to sprint</div>
+  <div id="statusPill">🌿 Alpine Meadow <span id="runStatus">· Walking</span></div>
   <div id="joystickZone"><div id="joystickBase"><div id="joystickNub"></div></div></div>
+  <div id="actionBar">
+    <button id="runButton">🚶 Walk</button>
+    <button id="pauseTimeButton">⏸ Pause time</button>
+  </div>
   <button id="settingsToggle">⚙</button>
   <div id="settingsPanel">
+    <div class="panelTitle">Meadow controls</div>
     <div class="settingsRow">
       <label>Time of day</label>
       <input type="range" id="timeSlider" min="0" max="1000" value="740">
@@ -27,12 +33,26 @@
       </div>
     </div>
     <div class="settingsRow">
+      <label>Wind</label>
+      <div class="btnGroup">
+        <button data-wind="0.35" class="windBtn">Calm</button>
+        <button data-wind="1" class="windBtn active">Breeze</button>
+        <button data-wind="1.8" class="windBtn">Strong</button>
+      </div>
+    </div>
+    <div class="settingsRow">
       <label>Quality <span class="hintSmall">(reloads scene)</span></label>
       <div class="btnGroup" id="qualityButtons">
         <button data-q="low" class="qBtn">Low</button>
         <button data-q="medium" class="qBtn">Med</button>
         <button data-q="high" class="qBtn">High</button>
       </div>
+    </div>
+    <div class="featureList">
+      <span>🌾 Dense animated grass</span>
+      <span>🏠 3–5 story glowing homes</span>
+      <span>🦋 Birds, fish, rabbits & fireflies</span>
+      <span>🌦 Dynamic weather & day/night</span>
     </div>
   </div>
 
