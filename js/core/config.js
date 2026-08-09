@@ -2,9 +2,9 @@
 // Nothing in this file changes at runtime.
 
 export const QUALITY = {
-  low:    { grass: 7000,  flowersPer: 42,  trees: 18, fireflies: 30, weather: 220, stars: 300, shadowRes: 512,  birds: 5,  fish: 4, rabbits: 4 },
-  medium: { grass: 18000, flowersPer: 75,  trees: 24, fireflies: 52, weather: 420, stars: 520, shadowRes: 1024, birds: 7, fish: 5, rabbits: 5 },
-  high:   { grass: 36000, flowersPer: 115, trees: 34, fireflies: 82, weather: 680, stars: 850, shadowRes: 2048, birds: 10, fish: 7, rabbits: 8 }
+  low:    { grass: 7000,  flowersPer: 42,  trees: 18, fireflies: 30, weather: 220, stars: 300, shadowRes: 512,  birds: 5,  fish: 4, rabbits: 4, rocks: 120, shrubs: 160, reeds: 50, stones: 45 },
+  medium: { grass: 18000, flowersPer: 75,  trees: 24, fireflies: 52, weather: 420, stars: 520, shadowRes: 1024, birds: 7,  fish: 5, rabbits: 5, rocks: 220, shrubs: 300, reeds: 90, stones: 75 },
+  high:   { grass: 36000, flowersPer: 115, trees: 34, fireflies: 82, weather: 680, stars: 850, shadowRes: 2048, birds: 10, fish: 7, rabbits: 8, rocks: 360, shrubs: 500, reeds: 140, stones: 115 }
 };
 
 export const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.innerWidth < 820;
@@ -19,7 +19,7 @@ export const quality = QUALITY[qualityLevel];
 
 export const fieldExtent = 100;
 export const groundMeshSize = 460;
-export const groundSegments = 170;
+export const groundSegments = 190;
 
 export const spawn = { x: 0, z: 16 };
 export const lake = { x: 14, z: -10, radius: 8.5, y: -0.9 };
