@@ -74,14 +74,23 @@ export function buildLake() {
     const x = Math.cos(angle) * r, y = Math.sin(angle) * r;
     if (i === 0) shape.moveTo(x, y); else shape.lineTo(x, y);
   }
-  const geo = new THREE.ShapeGeometry(shape, 1);
+  const geo = new THREE.ShapeGeometry(shape, 2);
   geo.rotateX(-Math.PI / 2);
   geo.translate(lake.x, lake.y, lake.z);
-  const mat = new THREE.MeshStandardMaterial({ color: 0x2f7a8c, roughness: 0.18, metalness: 0.05, transparent: true, opacity: 0.88 });
+  const mat = new THREE.MeshStandardMaterial({ color: 0x2f7a8c, roughness: 0.14, metalness: 0.08, transparent: true, opacity: 0.9 });
   mat.onBeforeCompile = function (shader) {
     shader.uniforms.uTime = { value: 0 };
+    shader.uniforms.uNightFactor = { value: 0 };
     shader.vertexShader = 'uniform float uTime;\n' + shader.vertexShader;
-    shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex>\ntransformed.y += sin(transformed.x * 0.5 + uTime * 1.2) * 0.025 + cos(transformed.z * 0.4 + uTime * 0.9) * 0.02;');
+    shader.vertexShader = shader.vertexShader.replace(
+      '#include <begin_vertex>',
+      '#include <begin_vertex>\ntransformed.y += sin(transformed.x * 0.5 + uTime * 1.2) * 0.025 + cos(transformed.z * 0.4 + uTime * 0.9) * 0.02;'
+    );
+    shader.fragmentShader = 'uniform float uTime; uniform float uNightFactor;\n' + shader.fragmentShader;
+    shader.fragmentShader = shader.fragmentShader.replace(
+      '#include <dithering_fragment>',
+      '#include <dithering_fragment>\nfloat auroraRipple = 0.5 + 0.5 * sin(vViewPosition.x * 0.055 + vViewPosition.y * 0.025 + uTime * 0.12);\nvec3 auroraWater = vec3(0.01, 0.36, 0.18) * uNightFactor * auroraRipple * 0.22;\ngl_FragColor.rgb += auroraWater;'
+    );
     state.waterShaderRef = shader;
   };
   state.scene.add(new THREE.Mesh(geo, mat));

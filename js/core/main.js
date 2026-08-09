@@ -2,6 +2,8 @@ import { isMobile, spawn } from './config.js';
 import { state } from './state.js';
 import { terrainHeight, buildGround, buildLake } from '../world/terrain.js';
 import { buildSky, buildLights, buildClouds, buildWeather, applyDayNight, updateWeather, updateClouds } from '../world/environment.js';
+import { buildAurora, updateAurora } from '../world/aurora.js';
+import { buildWorldDetails, updateWorldDetails } from '../world/landmarks.js';
 import { buildGrass, buildFlowers, buildTrees, buildMountains } from '../world/scenery.js';
 import { buildHouses, updateHouses } from '../world/village.js';
 import { buildFlyers, updateFlyers, buildFishSchool, updateFish, buildRabbits, updateRabbits, buildFireflies, updateFireflies } from '../entities/wildlife.js';
@@ -33,18 +35,36 @@ function init() {
   const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 480);
   state.canvas = canvas; state.renderer = renderer; state.scene = scene; state.camera = camera;
 
-  buildSky(); buildLights(); buildClouds(); buildWeather(); buildGround(); buildLake();
-  buildGrass(); buildFlowers(); buildTrees(); buildMountains(); buildHouses();
-  buildFlyers(); buildFishSchool(); buildRabbits(); buildFireflies();
+  buildSky();
+  buildLights();
+  buildAurora();
+  buildClouds();
+  buildWeather();
+  buildGround();
+  buildLake();
+  buildGrass();
+  buildFlowers();
+  buildTrees();
+  buildMountains();
+  buildHouses();
+  buildWorldDetails();
+  buildFlyers();
+  buildFishSchool();
+  buildRabbits();
+  buildFireflies();
 
   state.character = buildCharacter();
   state.character.position.set(spawn.x, terrainHeight(spawn.x, spawn.z), spawn.z);
   state.character.rotation.y = 0;
-  initControls(); applyDayNight(); updateCamera();
+  initControls();
+  applyDayNight();
+  updateAurora(0);
+  updateCamera();
 
   window.addEventListener('resize', function () {
     camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight);
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
   });
 
   const clock = new THREE.Clock();
@@ -60,19 +80,31 @@ function init() {
     timeSlider.value = String(Math.round((((state.dayTime % 1) + 1) % 1) * 1000));
 
     applyDayNight();
+    updateAurora(elapsed);
     updateWeather(dt, state.character.position, elapsed);
+
     if (state.grassShaderRef) {
       state.grassShaderRef.uniforms.uTime.value = elapsed;
       if (state.grassShaderRef.uniforms.uWindStrength) state.grassShaderRef.uniforms.uWindStrength.value = state.windStrength;
     }
-    if (state.waterShaderRef) state.waterShaderRef.uniforms.uTime.value = elapsed;
+    if (state.waterShaderRef) {
+      state.waterShaderRef.uniforms.uTime.value = elapsed;
+      if (state.waterShaderRef.uniforms.uNightFactor) state.waterShaderRef.uniforms.uNightFactor.value = state.nightFactor;
+    }
     for (let i = 0; i < state.flowerShaderRefs.length; i++) {
       state.flowerShaderRefs[i].uniforms.uTime.value = elapsed;
       if (state.flowerShaderRefs[i].uniforms.uWindStrength) state.flowerShaderRefs[i].uniforms.uWindStrength.value = state.windStrength;
     }
 
-    updateFlyers(elapsed); updateFish(elapsed); updateRabbits(elapsed); updateFireflies(elapsed);
-    updateHouses(elapsed); updatePlayer(dt); updateCamera(); updateClouds(dt);
+    updateFlyers(elapsed);
+    updateFish(elapsed);
+    updateRabbits(elapsed);
+    updateFireflies(elapsed);
+    updateHouses(elapsed);
+    updateWorldDetails(elapsed);
+    updatePlayer(dt);
+    updateCamera();
+    updateClouds(dt);
     renderer.render(scene, camera);
   }
 
